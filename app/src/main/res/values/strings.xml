@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name">ECOLIM</string>
+    <string name="app_name_full">ECOLIM S.A.C.</string>
+    <string name="welcome_operator">Bienvenido, Operario</string>
+    <string name="user_id">ID de Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="login">INICIAR SESIÓN</string>
+    <string name="forgot_password">¿Olvidaste tu contraseña?</string>
+    <string name="version_info">ECOLIM COLLECT • V2.4.0</string>
+    <string name="logo_description">Logo de ECOLIM</string>
+
+    <string name="signup_title">Registro de Operario</string>
+    <string name="dni">DNI</string>
+    <string name="full_name">Nombres y Apellidos</string>
+    <string name="create_password">Cree una contraseña</string>
+    <string name="signup_button">REGISTRARSE</string>
+    <string name="already_have_account">¿Ya tienes una cuenta? Inicia sesión</string>
+
+    <string name="signup_success_title">¡Registro Exitoso!</string>
+    <string name="signup_success_message">Tu cuenta de operario ha sido creada correctamente. Ahora puedes comenzar a registrar recolecciones.</string>
+    <string name="start_now">COMENZAR AHORA</string>
+    <string name="version_and_id_placeholder">Versión 2.4.0 • ID Operario: ECO-772</string>
+    <string name="signup_success_icon_desc">Ícono de registro exitoso</string>
+    <string name="info_icon_description">Ícono de información</string>
+
+    <string name="daily_summary">Resumen Diario</string>
+    <string name="collection_status">ESTADO DE RECOLECCIÓN</string>
+    <string name="total_collected_today">Total Recolectado Hoy</string>
+    <string name="more_than_yesterday">12% más que ayer</string>
+    <string name="recent_collections">Recolecciones Recientes</string>
+    <string name="view_all">Ver todo</string>
+    <string name="impact_goal">Meta de Impacto</string>
+    <string name="co2_reduction_goal">Has alcanzado el 85% del objetivo mensual de reducción de CO2.</string>
+
+    <string name="home">INICIO</string>
+    <string name="routes">RUTAS</string>
+    <string name="reports">REPORTES</string>
+    <string name="settings">AJUSTES</string>
+
+    <string name="profile">Perfil</string>
+    <string name="collection_status_icon_desc">Icono de estado de recolección</string>
+    <string name="trending_up_icon_desc">Icono de tendencia ascendente</string>
+    <string name="pet_plastic">Plástico PET</string>
+    <string name="pet_plastic_details">10:30 AM - Zona Norte</string>
+    <string name="pet_plastic_weight">45.5 Kg</string>
+    <string name="paper_and_cardboard">Papel y Cartón</string>
+    <string name="paper_and_cardboard_details">09:15 AM - Zona Sur</string>
+    <string name="paper_and_cardboard_weight">128.0 Kg</string>
+    <string name="transparent_glass">Vidrio Transparente</string>
+    <string name="transparent_glass_details">08:45 AM - Zona Centro</string>
+    <string name="transparent_glass_weight">82.3 Kg</string>
+    <string name="impact_goal_icon_desc">Icono de meta de impacto</string>
+    <string name="total_collected_amount">1,240 Kg</string>
+    <string name="fab_add_description">Añadir nueva recolección</string>
+    <string name="recycle_icon_desc">Icono de reciclaje</string>
+    <string name="box_icon_desc">Icono de caja</string>
+    <string name="bottle_icon_desc">Icono de botella</string>
+
+    <string name="new_waste_title">Nuevo Registro</string>
+    <string name="waste_image_placeholder_desc">Placeholder para la imagen del residuo</string>
+    <string name="waste_type">Tipo de Residuo</string>
+    <string name="scan_button">ESCANEAR</string>
+    <string name="total_weight">Peso Total</string>
+    <string name="default_weight">0.00</string>
+    <string name="weight_helper_text">Introduzca el peso neto verificado</string>
+    <string name="zone_origin">Zona / Origen</string>
+    <string name="pickup_location_hint">Ubicación de recogida</string>
+    <string name="irreversible_action_warning">Asegúrese de que todos los datos coincidan con el albarán de entrega antes de guardar el registro. Esta acción es irreversible.</string>
+    <string name="save_record_button">GUARDAR REGISTRO</string>
+    <string name="more_options">Más opciones</string>
+    <string name="select_waste_type_hint">Seleccionar Tipo</string>
+</resources>
