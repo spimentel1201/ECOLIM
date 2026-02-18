@@ -15,10 +15,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary_green"
-            app:title="@string/daily_summary"
-            app:titleTextColor="@color/white"
+            app:menu="@menu/home_toolbar_menu"
             app:navigationIcon="@drawable/ic_menu"
-            app:menu="@menu/home_toolbar_menu" />
+            app:title="@string/daily_summary"
+            app:titleTextColor="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -55,8 +55,8 @@
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
-                            android:src="@drawable/ic_scale"
-                            android:contentDescription="@string/collection_status_icon_desc" />
+                            android:contentDescription="@string/collection_status_icon_desc"
+                            android:src="@drawable/ic_scale" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -93,8 +93,8 @@
                         <ImageView
                             android:layout_width="16dp"
                             android:layout_height="16dp"
-                            android:src="@drawable/ic_trending_up"
-                            android:contentDescription="@string/trending_up_icon_desc" />
+                            android:contentDescription="@string/trending_up_icon_desc"
+                            android:src="@drawable/ic_trending_up" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -147,9 +147,9 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/circular_background"
+                        android:contentDescription="@string/recycle_icon_desc"
                         android:padding="8dp"
-                        android:src="@drawable/ic_recycle"
-                        android:contentDescription="@string/recycle_icon_desc" />
+                        android:src="@drawable/ic_recycle" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -197,9 +197,9 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/circular_background"
+                        android:contentDescription="@string/box_icon_desc"
                         android:padding="8dp"
-                        android:src="@drawable/ic_box"
-                        android:contentDescription="@string/box_icon_desc" />
+                        android:src="@drawable/ic_box" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -247,9 +247,9 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/circular_background"
+                        android:contentDescription="@string/bottle_icon_desc"
                         android:padding="8dp"
-                        android:src="@drawable/ic_bottle"
-                        android:contentDescription="@string/bottle_icon_desc" />
+                        android:src="@drawable/ic_bottle" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -297,9 +297,9 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/circular_background"
+                        android:contentDescription="@string/impact_goal_icon_desc"
                         android:padding="8dp"
-                        android:src="@drawable/ic_leaf"
-                        android:contentDescription="@string/impact_goal_icon_desc" />
+                        android:src="@drawable/ic_leaf" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -332,34 +332,36 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:fabCradleMargin="10dp"
-        app:fabCradleRoundedCornerRadius="10dp">
-
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="16dp"
-            android:background="@android:color/transparent"
-            app:itemIconTint="@color/bottom_nav_color_selector"
-            app:itemTextColor="@color/bottom_nav_color_selector"
-            app:menu="@menu/bottom_nav_menu" />
-
-    </com.google.android.material.bottomappbar.BottomAppBar>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_add"
         android:contentDescription="@string/fab_add_description"
-        android:backgroundTint="@color/primary_green"
-        app:layout_anchor="@id/bottomAppBar" />
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/primary_green"
+        app:layout_anchor="@id/bottomAppBar"
+        app:tint="@android:color/white" />
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        style="@style/Widget.Material3.BottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:fabAlignmentMode="end"
+        app:fabCradleMargin="10dp"
+        app:fabCradleRoundedCornerRadius="16dp"
+        app:hideOnScroll="true">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:backgroundTint="@color/primary_green"
+            app:itemIconTint="@color/primary_green"
+            app:menu="@menu/bottom_nav_menu" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
