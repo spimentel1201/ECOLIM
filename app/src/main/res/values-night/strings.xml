@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="password_hint">Ingrese su contraseña</string>
+    <string name="dni_hint">Ingrese su ID o DNI</string>
+    <string name="full_name_hint">Ingrese su nombre</string>
+</resources>
