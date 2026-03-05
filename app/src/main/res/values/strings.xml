@@ -72,4 +72,8 @@
     <string name="password_hint">Ingrese su contraseña</string>
     <string name="dni_hint">Ingrese su ID o DNI</string>
     <string name="full_name_hint">Ingrese su nombre</string>
+    <string name="cantidad_de_unidades_bolsas">Cantidad de unidades/bolsas</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="cantidadHint">0.00</string>
+    <string name="register">Registrarse</string>
 </resources>
