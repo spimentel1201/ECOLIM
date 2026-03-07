@@ -6,12 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * Clase encargada de la gestión de la base de datos local SQLite.
+ * Proporciona métodos para la creación de tablas y operaciones CRUD (Crear, Leer, Actualizar, Borrar).
+ */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "ecolim.db";
     private static final int DATABASE_VERSION = 1;
 
-    // Tabla Usuarios
+    // Constantes para la tabla Usuarios
     public static final String TABLE_USUARIOS = "usuarios";
     public static final String COL_USER_ID = "id_usuario";
     public static final String COL_USER_DNI = "dni";
@@ -19,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_USER_PASSWORD = "password";
     public static final String COL_USER_ROL = "rol";
 
-    // Tabla Residuos
+    // Constantes para la tabla Residuos
     public static final String TABLE_RESIDUOS = "residuos";
     public static final String COL_RES_ID = "id_residuo";
     public static final String COL_RES_TIPO = "tipo";
@@ -29,10 +33,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_RES_FECHA = "fecha_registro";
     public static final String COL_RES_SINCRONIZADO = "sincronizado";
 
+    /**
+     * Constructor de la clase.
+     * @param context Contexto de la aplicación.
+     */
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    /**
+     * Crea las tablas necesarias al inicializar la base de datos por primera vez.
+     * Se implementó para asegurar que la estructura de datos esté disponible desde el primer uso.
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createUsuariosTable = "CREATE TABLE " + TABLE_USUARIOS + " (" +
@@ -54,6 +66,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createResiduosTable);
     }
 
+    /**
+     * Maneja la actualización de la base de datos si cambia la versión.
+     * Actualmente elimina y recrea las tablas (política de desarrollo).
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USUARIOS);
@@ -61,8 +77,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // --- CRUD USUARIOS ---
+    // --- MÉTODOS PARA USUARIOS ---
 
+    /**
+     * Registra un nuevo operario en la base de datos.
+     * @return ID del registro insertado o -1 si falla.
+     */
     public long registrarUsuario(String dni, String nombre, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -72,6 +92,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_USUARIOS, null, values);
     }
 
+    /**
+     * Valida las credenciales de un usuario.
+     * @return true si el DNI y password coinciden con un registro.
+     */
     public boolean login(String dni, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USUARIOS, new String[]{COL_USER_ID},
@@ -82,13 +106,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return success;
     }
 
+    /**
+     * Busca un usuario por su DNI para obtener información de perfil.
+     */
     public Cursor obtenerUsuarioPorDni(String dni) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(TABLE_USUARIOS, null, COL_USER_DNI + "=?", new String[]{dni}, null, null, null);
     }
 
-    // --- CRUD RESIDUOS ---
+    // --- MÉTODOS PARA RESIDUOS ---
 
+    /**
+     * Inserta un nuevo registro de recolección de residuos.
+     * Implementado para el almacenamiento local "Offline-First".
+     */
     public long registrarResiduo(String tipo, double peso, String zona, int cantidad, String fecha) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -100,15 +131,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_RESIDUOS, null, values);
     }
 
+    /**
+     * Obtiene el resumen de recolección agrupado por tipo de residuo.
+     * Utilizado para alimentar las tarjetas del Dashboard.
+     */
     public Cursor obtenerTotalesPorTipo() {
         SQLiteDatabase db = this.getReadableDatabase();
-        // Agrupar por tipo y sumar pesos y cantidades
         return db.rawQuery("SELECT " + COL_RES_TIPO + ", SUM(" + COL_RES_PESO + ") as total_peso, " +
                 "SUM(" + COL_RES_CANTIDAD + ") as total_cantidad, " +
                 "MAX(" + COL_RES_FECHA + ") as ultima_fecha " +
                 "FROM " + TABLE_RESIDUOS + " GROUP BY " + COL_RES_TIPO, null);
     }
 
+    /**
+     * Suma el peso total de todos los residuos registrados en la fecha actual.
+     * Se implementó para mostrar el KPI principal en la HomeActivity.
+     */
     public double obtenerTotalPesoHoy() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT SUM(" + COL_RES_PESO + ") FROM " + TABLE_RESIDUOS +
@@ -121,6 +159,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return total;
     }
 
+    /**
+     * Elimina un registro de residuo específico por ID.
+     */
     public int eliminarResiduo(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_RESIDUOS, COL_RES_ID + "=?", new String[]{String.valueOf(id)});

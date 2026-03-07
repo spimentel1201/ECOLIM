@@ -40,6 +40,17 @@
             </androidx.cardview.widget.CardView>
 
             <!-- Tipo de Residuo -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnScanWaste"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scan_button"
+                android:textColor="@color/primary_green"
+                app:icon="@drawable/ic_camera"
+                app:iconTint="@color/primary_green"
+                app:strokeColor="@color/primary_green" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

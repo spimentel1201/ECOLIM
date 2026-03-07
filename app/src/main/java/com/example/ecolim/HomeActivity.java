@@ -13,6 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Locale;
 
+/**
+ * Pantalla principal (Dashboard) de la aplicación.
+ * Muestra un resumen de las recolecciones del día y permite acceder al registro de nuevos residuos.
+ */
 public class HomeActivity extends AppCompatActivity {
 
     private TextView totalKgTextView;
@@ -29,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         totalKgTextView = findViewById(R.id.totalKgTextView);
         recentCollectionsContainer = findViewById(R.id.recentCollectionsContainer);
 
+        // Botón Flotante para ir a la pantalla de Nuevo Registro
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(HomeActivity.this, NewWasteActivity.class);
@@ -36,27 +41,35 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Se ejecuta cada vez que la actividad vuelve al primer plano.
+     * Implementado para asegurar que los datos del Dashboard estén siempre actualizados.
+     */
     @Override
     protected void onResume() {
         super.onResume();
         actualizarDatos();
     }
 
+    /**
+     * Consulta la base de datos para obtener el peso total del día y el resumen por tipo.
+     * Refresca la interfaz de usuario con la información más reciente.
+     */
     private void actualizarDatos() {
-        // Actualizar Peso Total de Hoy
+        // Actualizar Peso Total recolectado hoy (KPI principal)
         double totalPeso = dbHelper.obtenerTotalPesoHoy();
         totalKgTextView.setText(String.format(Locale.getDefault(), "%,.1f Kg", totalPeso));
 
-        // Limpiar contenedor
+        // Limpiar contenedor de la lista antes de volver a llenarlo
         recentCollectionsContainer.removeAllViews();
 
-        // Mostrar resumen por cada tipo (incluso si es 0)
+        // Iterar sobre los tipos de residuos para mostrar su estado actual
         for (String tipo : tiposResiduos) {
             double pesoTipo = 0;
             int cantidadTipo = 0;
             String ultimaFecha = "--:--";
 
-            // Consultar DB para este tipo específico
+            // Consulta específica para obtener totales y última hora por categoría
             Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
                     "SELECT SUM(peso), SUM(cantidad), MAX(fecha_registro) FROM residuos WHERE tipo = ?",
                     new String[]{tipo});
@@ -66,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
                 cantidadTipo = cursor.getInt(1);
                 String fechaRaw = cursor.getString(2);
                 if (fechaRaw != null && fechaRaw.length() >= 16) {
+                    // Extraer solo la hora del formato ISO (HH:mm)
                     ultimaFecha = fechaRaw.substring(11, 16);
                 }
             }
@@ -75,6 +89,13 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Infla y añade dinámicamente una tarjeta de resumen al contenedor visual.
+     * @param tipo Categoría del residuo.
+     * @param peso Peso total acumulado.
+     * @param cantidad Cantidad de registros.
+     * @param hora Hora de la última recolección.
+     */
     @SuppressLint("DefaultLocale")
     private void agregarItemResumen(String tipo, double peso, int cantidad, String hora) {
         View itemView = LayoutInflater.from(this).inflate(R.layout.item_recoleccion, recentCollectionsContainer, false);
@@ -88,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
         detailsView.setText(String.format("Cant: %d | Último: %s", cantidad, hora));
         weightView.setText(String.format(Locale.getDefault(), "%.1f Kg", peso));
 
-        // Asignar icono según tipo
+        // Selección de icono representativo según el tipo de residuo
         switch (tipo) {
             case "PLASTICO":
                 iconView.setImageResource(R.drawable.ic_recycle);

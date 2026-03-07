@@ -4,19 +4,14 @@ plugins {
 
 android {
     namespace 'com.example.ecolim'
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.example.ecolim"
         minSdk 30
-        targetSdk 36
+        targetSdk 34
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,6 +25,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
+    aaptOptions {
+        noCompress "tflite"
+    }
+    buildFeatures {
+        mlModelBinding false
+    }
 }
 
 dependencies {
@@ -37,6 +38,12 @@ dependencies {
     implementation libs.material
     implementation libs.recyclerview
     implementation libs.fragment
+    implementation libs.camera.camera2.pipe
+
+    // Solo el motor principal y GPU. ¡Cero librerías conflictivas!
+    implementation 'org.tensorflow:tensorflow-lite:2.14.0'
+    implementation libs.tensorflow.lite.gpu
+
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
