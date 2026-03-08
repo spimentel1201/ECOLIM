@@ -2,7 +2,6 @@ package com.example.ecolim.ui.auth;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,7 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.ecolim.R;
-import com.example.ecolim.data.local.DatabaseHelper;
+import com.example.ecolim.data.local.UsuarioDAO;
+import com.example.ecolim.data.model.Usuario;
 import com.example.ecolim.ui.home.HomeActivity;
 
 /**
@@ -20,14 +20,14 @@ import com.example.ecolim.ui.home.HomeActivity;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText dniEditText, passwordEditText;
-    private DatabaseHelper dbHelper;
+    private UsuarioDAO usuarioDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        dbHelper = new DatabaseHelper(this);
+        usuarioDAO = new UsuarioDAO(this);
 
         dniEditText = findViewById(R.id.dniEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -58,26 +58,22 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Consulta a la base de datos local para verificar credenciales
-        if (dbHelper.login(dni, password)) {
-            // Persistencia de sesión: Guardar datos del usuario logueado
-            Cursor cursor = dbHelper.obtenerUsuarioPorDni(dni);
-            if (cursor != null && cursor.moveToFirst()) {
-                String nombre = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseHelper.COL_USER_NOMBRE));
-                
+        // Consulta mediante DAO para verificar credenciales
+        if (usuarioDAO.login(dni, password)) {
+            // Persistencia de sesión: Obtener objeto Usuario del DAO
+            Usuario usuario = usuarioDAO.obtenerPorDni(dni);
+            if (usuario != null) {
                 SharedPreferences preferences = getSharedPreferences("EcolimPrefs", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("user_dni", dni);
-                editor.putString("user_nombre", nombre);
+                editor.putString("user_dni", usuario.getDni());
+                editor.putString("user_nombre", usuario.getNombre());
                 editor.apply();
-                
-                cursor.close();
             }
 
             // Redirección al Dashboard tras éxito
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
-            finish(); // Finaliza LoginActivity para evitar volver atrás
+            finish();
         } else {
             Toast.makeText(this, "DNI o contraseña incorrectos", Toast.LENGTH_SHORT).show();
         }

@@ -25,6 +25,7 @@ import androidx.core.util.Pair;
 
 import com.example.ecolim.R;
 import com.example.ecolim.data.local.DatabaseHelper;
+import com.example.ecolim.data.local.ResiduoDAO;
 import com.google.android.material.datepicker.MaterialDatePicker;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -50,7 +51,7 @@ public class ReportsActivity extends AppCompatActivity {
     
     private TextView tvSelectedDates;
     private Spinner reportTypeSpinner;
-    private DatabaseHelper dbHelper;
+    private ResiduoDAO residuoDAO;
     private String startDate = "", endDate = "";
     
     private final String[] typesForReport = {"TODOS", "ORGANICO", "PLASTICO", "PAPEL", "METAL", "VIDRIO", "CARTON", "PELIGROSO"};
@@ -60,7 +61,7 @@ public class ReportsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reports);
 
-        dbHelper = new DatabaseHelper(this);
+        residuoDAO = new ResiduoDAO(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -105,8 +106,6 @@ public class ReportsActivity extends AppCompatActivity {
      * Verifica permisos según la versión de Android antes de exportar.
      */
     private void checkPermissionAndExport() {
-        // En Android 10 (API 29) y superiores, getExternalFilesDir no requiere permisos.
-        // Solo solicitamos el permiso en versiones anteriores (API 28 o menos).
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
@@ -114,7 +113,6 @@ public class ReportsActivity extends AppCompatActivity {
                 generateExcelReport();
             }
         } else {
-            // Android 10+ : Acceso directo a carpetas privadas de la app
             generateExcelReport();
         }
     }
@@ -136,7 +134,7 @@ public class ReportsActivity extends AppCompatActivity {
      */
     private void generateExcelReport() {
         String tipoSeleccionado = reportTypeSpinner.getSelectedItem().toString();
-        Cursor cursor = dbHelper.obtenerResiduosFiltrados(startDate, endDate, tipoSeleccionado);
+        Cursor cursor = residuoDAO.obtenerFiltrados(startDate, endDate, tipoSeleccionado);
 
         if (cursor == null || cursor.getCount() == 0) {
             Toast.makeText(this, "No hay datos para exportar con estos filtros", Toast.LENGTH_LONG).show();
