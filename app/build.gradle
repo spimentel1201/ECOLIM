@@ -43,6 +43,7 @@ dependencies {
     // Solo el motor principal y GPU. ¡Cero librerías conflictivas!
     implementation 'org.tensorflow:tensorflow-lite:2.14.0'
     implementation libs.tensorflow.lite.gpu
+    implementation libs.poi.ooxml
 
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit

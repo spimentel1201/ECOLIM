@@ -8,4 +8,14 @@
     <string name="register">Registrarse</string>
     <string name="welcomeMessage">Bienvenido</string>
     <string name="total_collected_history">Total recolectado hasta ahora</string>
+    <string name="viewReports">Ver Reportes</string>
+    <string name="imageIconHomeContentDescription">Icono de home</string>
+    <string name="homeTotalWeightToday">0.00 Kg</string>
+    <string name="homeTotalWeightHistory">0.00 Kg</string>
+    <string name="reportsDateFilter">Filtrar por Fecha</string>
+    <string name="reportsSelectDate">Seleccionar Rango de Fechas</string>
+    <string name="reportsRange">Rango: Hoy</string>
+    <string name="reportsWasteType">Tipo de Residuo</string>
+    <string name="buttonExportToExcel">Exportar a Excel (.xlsx)</string>
+    <string name="textInfoReport">El archivo se guardará en la carpeta de Documentos y podrá ser compartido inmediatamente.</string>
 </resources>

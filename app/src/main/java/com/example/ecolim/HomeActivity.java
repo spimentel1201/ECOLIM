@@ -40,6 +40,13 @@ public class HomeActivity extends AppCompatActivity {
 
         mostrarBienvenida();
 
+        // Botón para ir a la pantalla de Reportes
+        ImageView btnGoToReports = findViewById(R.id.btnGoToReports);
+        btnGoToReports.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ReportsActivity.class);
+            startActivity(intent);
+        });
+
         // Botón Flotante para ir a la pantalla de Nuevo Registro
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
@@ -97,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Actualizar Peso Total Histórico
         double totalPesoHistorico = dbHelper.obtenerTotalPesoHistorico();
-        totalHistoricoTextView.setText(String.format(Locale.getDefault(), "Acumulado: %,.1f Kg", totalPesoHistorico));
+        totalHistoricoTextView.setText(String.format(Locale.getDefault(), "%,.1f Kg", totalPesoHistorico));
 
         // Limpiar contenedor de la lista antes de volver a llenarlo
         recentCollectionsContainer.removeAllViews();

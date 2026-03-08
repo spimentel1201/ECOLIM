@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Clase encargada de la gestión de la base de datos local SQLite.
  * Proporciona métodos para la creación de tablas y operaciones CRUD (Crear, Leer, Actualizar, Borrar).
@@ -172,6 +175,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return total;
+    }
+
+    /**
+     * Obtiene registros de residuos filtrados para la generación de reportes.
+     * @param fechaInicio Fecha inicial (YYYY-MM-DD).
+     * @param fechaFin Fecha final (YYYY-MM-DD).
+     * @param tipo Tipo de residuo o "TODOS".
+     * @return Cursor con los resultados filtrados.
+     */
+    public Cursor obtenerResiduosFiltrados(String fechaInicio, String fechaFin, String tipo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        StringBuilder query = new StringBuilder("SELECT * FROM " + TABLE_RESIDUOS + " WHERE 1=1");
+        List<String> args = new ArrayList<>();
+
+        if (fechaInicio != null && !fechaInicio.isEmpty() && fechaFin != null && !fechaFin.isEmpty()) {
+            query.append(" AND date(" + COL_RES_FECHA + ") BETWEEN date(?) AND date(?)");
+            args.add(fechaInicio);
+            args.add(fechaFin);
+        }
+
+        if (tipo != null && !tipo.equals("TODOS")) {
+            query.append(" AND " + COL_RES_TIPO + " = ?");
+            args.add(tipo);
+        }
+
+        query.append(" ORDER BY " + COL_RES_FECHA + " DESC");
+        return db.rawQuery(query.toString(), args.toArray(new String[0]));
     }
 
     /**
