@@ -23,7 +23,7 @@
     <string name="signup_success_icon_desc">Ícono de registro exitoso</string>
     <string name="info_icon_description">Ícono de información</string>
 
-    <string name="daily_summary">Resumen Diario</string>
+    <string name="daily_summary">ECOLIM - Resumen Diario</string>
     <string name="collection_status">ESTADO DE RECOLECCIÓN</string>
     <string name="total_collected_today">Total Recolectado Hoy</string>
     <string name="more_than_yesterday">12% más que ayer</string>
@@ -60,8 +60,8 @@
     <string name="waste_image_placeholder_desc">Placeholder para la imagen del residuo</string>
     <string name="waste_type">Tipo de Residuo</string>
     <string name="scan_button">ESCANEAR</string>
-    <string name="total_weight">Peso unitarioTotal</string>
-    <string name="default_weight">0.00</string>
+    <string name="total_weight">Peso unitario en Kg</string>
+    <string name="default_weight">0.00 Kg</string>
     <string name="weight_helper_text">Introduzca el peso neto verificado en Kg</string>
     <string name="zone_origin">Zona / Origen</string>
     <string name="pickup_location_hint">Ubicación de recogida</string>
@@ -76,4 +76,6 @@
     <string name="cantidad">Cantidad</string>
     <string name="cantidadHint">0.00</string>
     <string name="register">Registrarse</string>
+    <string name="welcomeMessage">Bienvenido</string>
+    <string name="total_collected_history">Total recolectado hasta ahora</string>
 </resources>

@@ -160,6 +160,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * Suma el peso total de todos los residuos registrados históricamente.
+     * Implementado para mostrar el acumulado total en el Dashboard.
+     */
+    public double obtenerTotalPesoHistorico() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT SUM(" + COL_RES_PESO + ") FROM " + TABLE_RESIDUOS, null);
+        double total = 0;
+        if (cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+        }
+        cursor.close();
+        return total;
+    }
+
+    /**
      * Elimina un registro de residuo específico por ID.
      */
     public int eliminarResiduo(int id) {

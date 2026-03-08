@@ -32,6 +32,7 @@
                 android:layout_height="180dp"
                 app:cardCornerRadius="16dp">
                 <ImageView
+                    android:id="@+id/wasteImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/waste_placeholder"
@@ -45,6 +46,7 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="@string/scan_button"
                 android:textColor="@color/primary_green"
                 app:icon="@drawable/ic_camera"
@@ -66,7 +68,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@android:drawable/btn_dropdown" />
 
-            <!-- Peso Total -->
+            <!-- Peso Unitario -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

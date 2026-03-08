@@ -2,6 +2,7 @@ package com.example.ecolim;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import java.util.Locale;
  */
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView totalKgTextView;
+    private TextView totalKgTextView, totalHistoricoTextView, welcomeTextView;
     private LinearLayout recentCollectionsContainer;
     private DatabaseHelper dbHelper;
     
@@ -33,7 +34,11 @@ public class HomeActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         totalKgTextView = findViewById(R.id.totalKgTextView);
+        totalHistoricoTextView = findViewById(R.id.totalHistoricoTextView);
+        welcomeTextView = findViewById(R.id.welcomeTextView);
         recentCollectionsContainer = findViewById(R.id.recentCollectionsContainer);
+
+        mostrarBienvenida();
 
         // Botón Flotante para ir a la pantalla de Nuevo Registro
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -41,6 +46,34 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(HomeActivity.this, NewWasteActivity.class);
             startActivity(intent);
         });
+    }
+
+    /**
+     * Recupera el nombre del usuario de SharedPreferences y lo muestra en formato CamelCase.
+     */
+    private void mostrarBienvenida() {
+        SharedPreferences preferences = getSharedPreferences("EcolimPrefs", MODE_PRIVATE);
+        String nombre = preferences.getString("user_nombre", "Usuario");
+        welcomeTextView.setText("Bienvenido, " + toCamelCase(nombre));
+    }
+
+    /**
+     * Convierte una cadena a formato CamelCase (Primera letra de cada palabra en mayúscula).
+     */
+    private String toCamelCase(String text) {
+        if (text == null || text.isEmpty()) return text;
+        StringBuilder sb = new StringBuilder();
+        boolean nextTitleCase = true;
+        for (char c : text.toLowerCase().toCharArray()) {
+            if (Character.isSpaceChar(c)) {
+                nextTitleCase = true;
+            } else if (nextTitleCase) {
+                c = Character.toTitleCase(c);
+                nextTitleCase = false;
+            }
+            sb.append(c);
+        }
+        return sb.toString();
     }
 
     /**
@@ -59,8 +92,12 @@ public class HomeActivity extends AppCompatActivity {
      */
     private void actualizarDatos() {
         // Actualizar Peso Total recolectado hoy (KPI principal)
-        double totalPeso = dbHelper.obtenerTotalPesoHoy();
-        totalKgTextView.setText(String.format(Locale.getDefault(), "%,.1f Kg", totalPeso));
+        double totalPesoHoy = dbHelper.obtenerTotalPesoHoy();
+        totalKgTextView.setText(String.format(Locale.getDefault(), "%,.1f Kg", totalPesoHoy));
+
+        // Actualizar Peso Total Histórico
+        double totalPesoHistorico = dbHelper.obtenerTotalPesoHistorico();
+        totalHistoricoTextView.setText(String.format(Locale.getDefault(), "Acumulado: %,.1f Kg", totalPesoHistorico));
 
         // Limpiar contenedor de la lista antes de volver a llenarlo
         recentCollectionsContainer.removeAllViews();
@@ -72,7 +109,6 @@ public class HomeActivity extends AppCompatActivity {
             String ultimaFecha = "--:--";
 
             // Consulta específica para obtener totales y última hora por categoría
-            // Se asume que la tabla se llama 'residuos' y las columnas coinciden con DatabaseHelper
             Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
                     "SELECT SUM(peso), SUM(cantidad), MAX(fecha_registro) FROM residuos WHERE tipo = ?",
                     new String[]{tipo});

@@ -6,4 +6,6 @@
     <string name="cantidad">Cantidad</string>
     <string name="cantidadHint">0.00</string>
     <string name="register">Registrarse</string>
+    <string name="welcomeMessage">Bienvenido</string>
+    <string name="total_collected_history">Total recolectado hasta ahora</string>
 </resources>

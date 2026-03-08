@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class NewWasteActivity extends AppCompatActivity {
 
     private Spinner typeSpinner;
     private EditText weightEditText, zoneEditText, quantityEditText;
+    private ImageView wasteImageView;
     private DatabaseHelper dbHelper;
     private ArrayAdapter<String> adapter;
     
@@ -80,6 +82,7 @@ public class NewWasteActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
+        wasteImageView = findViewById(R.id.wasteImageView);
         typeSpinner = findViewById(R.id.typeSpinner);
         weightEditText = findViewById(R.id.weightEditText);
         zoneEditText = findViewById(R.id.zoneEditText);
@@ -166,6 +169,9 @@ public class NewWasteActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) (extras != null ? extras.get("data") : null);
             if (imageBitmap != null) {
+                // Mostrar la imagen capturada en el ImageView del formulario
+                wasteImageView.setImageBitmap(imageBitmap);
+                // Iniciar la clasificación por IA
                 classifyImage(imageBitmap);
             }
         }
@@ -268,17 +274,16 @@ public class NewWasteActivity extends AppCompatActivity {
         try {
             double pesoUnitario = Double.parseDouble(pesoStr);
             int cantidad = Integer.parseInt(cantidadStr);
-
-            // CÁLCULO: Multiplicamos el peso por la cantidad para obtener el peso total del registro
+            
+            // CÁLCULO: Multiplicamos el peso unitario por la cantidad para obtener el peso total
             double pesoTotal = pesoUnitario * cantidad;
-
+            
             String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
-            // Ahora pasamos 'pesoTotal' en lugar de solo el valor del EditText
             long id = dbHelper.registrarResiduo(tipo, pesoTotal, zona, cantidad, fecha);
 
             if (id != -1) {
-                Toast.makeText(this, "Registro guardado: " + pesoTotal + " Kg totales", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Registro guardado: " + String.format("%.2f", pesoTotal) + " Kg totales", Toast.LENGTH_SHORT).show();
                 finish();
             }
         } catch (NumberFormatException e) {
