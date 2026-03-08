@@ -22,7 +22,9 @@ public class HomeActivity extends AppCompatActivity {
     private TextView totalKgTextView;
     private LinearLayout recentCollectionsContainer;
     private DatabaseHelper dbHelper;
-    private final String[] tiposResiduos = {"ORGANICO", "PLASTICO", "CARTON", "METAL", "PELIGROSO"};
+    
+    // Lista de tipos sincronizada con NewWasteActivity y el modelo IA
+    private final String[] tiposResiduos = {"ORGANICO", "PLASTICO", "PAPEL", "METAL", "VIDRIO", "CARTON", "PELIGROSO"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,7 @@ public class HomeActivity extends AppCompatActivity {
             String ultimaFecha = "--:--";
 
             // Consulta específica para obtener totales y última hora por categoría
+            // Se asume que la tabla se llama 'residuos' y las columnas coinciden con DatabaseHelper
             Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
                     "SELECT SUM(peso), SUM(cantidad), MAX(fecha_registro) FROM residuos WHERE tipo = ?",
                     new String[]{tipo});
@@ -114,6 +117,7 @@ public class HomeActivity extends AppCompatActivity {
             case "PLASTICO":
                 iconView.setImageResource(R.drawable.ic_recycle);
                 break;
+            case "PAPEL":
             case "CARTON":
                 iconView.setImageResource(R.drawable.ic_box);
                 break;
@@ -123,8 +127,14 @@ public class HomeActivity extends AppCompatActivity {
             case "METAL":
                 iconView.setImageResource(R.drawable.ic_scale_green);
                 break;
+            case "VIDRIO":
+                iconView.setImageResource(R.drawable.ic_bottle);
+                break;
             case "PELIGROSO":
                 iconView.setImageResource(R.drawable.ic_info);
+                break;
+            default:
+                iconView.setImageResource(R.drawable.ic_recycle);
                 break;
         }
 

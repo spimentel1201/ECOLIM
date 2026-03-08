@@ -60,9 +60,9 @@
     <string name="waste_image_placeholder_desc">Placeholder para la imagen del residuo</string>
     <string name="waste_type">Tipo de Residuo</string>
     <string name="scan_button">ESCANEAR</string>
-    <string name="total_weight">Peso Total</string>
+    <string name="total_weight">Peso unitarioTotal</string>
     <string name="default_weight">0.00</string>
-    <string name="weight_helper_text">Introduzca el peso neto verificado</string>
+    <string name="weight_helper_text">Introduzca el peso neto verificado en Kg</string>
     <string name="zone_origin">Zona / Origen</string>
     <string name="pickup_location_hint">Ubicación de recogida</string>
     <string name="irreversible_action_warning">Asegúrese de que todos los datos coincidan con el albarán de entrega antes de guardar el registro. Esta acción es irreversible.</string>

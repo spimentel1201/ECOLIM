@@ -266,14 +266,19 @@ public class NewWasteActivity extends AppCompatActivity {
         }
 
         try {
-            double peso = Double.parseDouble(pesoStr);
+            double pesoUnitario = Double.parseDouble(pesoStr);
             int cantidad = Integer.parseInt(cantidadStr);
+
+            // CÁLCULO: Multiplicamos el peso por la cantidad para obtener el peso total del registro
+            double pesoTotal = pesoUnitario * cantidad;
+
             String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
-            long id = dbHelper.registrarResiduo(tipo, peso, zona, cantidad, fecha);
+            // Ahora pasamos 'pesoTotal' en lugar de solo el valor del EditText
+            long id = dbHelper.registrarResiduo(tipo, pesoTotal, zona, cantidad, fecha);
 
             if (id != -1) {
-                Toast.makeText(this, "Registro guardado localmente", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Registro guardado: " + pesoTotal + " Kg totales", Toast.LENGTH_SHORT).show();
                 finish();
             }
         } catch (NumberFormatException e) {
