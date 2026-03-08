@@ -1,4 +1,4 @@
-package com.example.ecolim;
+package com.example.ecolim.ui.waste;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,7 +26,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import org.tensorflow.lite.DataType;
+import com.example.ecolim.R;
+import com.example.ecolim.data.local.DatabaseHelper;
+
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.Tensor;
 

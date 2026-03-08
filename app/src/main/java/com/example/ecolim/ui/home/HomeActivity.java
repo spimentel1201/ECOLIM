@@ -1,4 +1,4 @@
-package com.example.ecolim;
+package com.example.ecolim.ui.home;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ecolim.ui.waste.NewWasteActivity;
+import com.example.ecolim.R;
+import com.example.ecolim.ui.reports.ReportsActivity;
+import com.example.ecolim.data.local.DatabaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.Locale;
 

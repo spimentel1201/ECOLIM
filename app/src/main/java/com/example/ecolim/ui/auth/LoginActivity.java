@@ -1,4 +1,4 @@
-package com.example.ecolim;
+package com.example.ecolim.ui.auth;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ecolim.R;
+import com.example.ecolim.data.local.DatabaseHelper;
+import com.example.ecolim.ui.home.HomeActivity;
 
 /**
  * Actividad encargada de la autenticación de usuarios.

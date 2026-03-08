@@ -30,27 +30,27 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.auth.LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.ECOLIM" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".ui.auth.SignupActivity"
             android:exported="false"
             android:theme="@style/Theme.ECOLIM" />
         <activity
-            android:name=".SignupConfirmationActivity"
+            android:name=".ui.auth.SignupConfirmationActivity"
             android:exported="false"
             android:theme="@style/Theme.ECOLIM" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.ECOLIM" />
         <activity
-            android:name=".NewWasteActivity"
+            android:name=".ui.waste.NewWasteActivity"
             android:exported="false"
             android:theme="@style/Theme.ECOLIM" />
         <activity
-            android:name=".ReportsActivity"
+            android:name=".ui.reports.ReportsActivity"
             android:exported="false"
             android:theme="@style/Theme.ECOLIM" />
 

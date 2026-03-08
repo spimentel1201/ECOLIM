@@ -1,4 +1,4 @@
-package com.example.ecolim;
+package com.example.ecolim.data.local;
 
 import android.content.ContentValues;
 import android.content.Context;

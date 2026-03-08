@@ -1,4 +1,4 @@
-package com.example.ecolim;
+package com.example.ecolim.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ecolim.R;
+import com.example.ecolim.data.local.DatabaseHelper;
 
 /**
  * Actividad para el registro de nuevos operarios.
